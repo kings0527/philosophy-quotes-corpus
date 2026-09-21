@@ -461,6 +461,9 @@ def main():
     write("corpus.html", shell("资料", """
 <h1>资料</h1>
 <p class="lead">77 位思想家的语录库总览。每一行可进入单人页，查看带《文献》出处的完整条目。</p>
+<div class="chips"><span class="chip">⚠️ 表内 <b>A／B 条数</b>为 <b>v1 判定规则</b>下的口径</span>
+<span class="chip">v1 不确定带宽 <b>7.1 pp</b></span>
+<span class="chip"><a href="about.html" style="color:inherit">规则修订说明 →</a></span></div>
 <div class="fbar">
 <input id="q" placeholder="搜索人名或派别…">
 <select id="f-trad"><option value="">全部传统</option></select>
@@ -502,6 +505,9 @@ def main():
 <h1>哲学坐标表</h1>
 <p class="lead">把 77 位思想家投影到四个问题上。每个问题给出离散取值——同一列里的人，
 在这个问题上回答了同一句话。</p>
+<div class="chips"><span class="chip">⚠️ 本表为 <b>v2 判定</b>，与库内 A／B 条数（v1 口径）不可直接互推</span>
+<span class="chip">v1 不确定带宽 <b>7.1 pp</b></span>
+<span class="chip"><a href="about.html" style="color:inherit">规则修订说明 →</a></span></div>
 <div class="fbar">
 <input id="q" placeholder="搜索人名或派别…">
 <select id="f-trad"><option value="">全部传统</option></select>

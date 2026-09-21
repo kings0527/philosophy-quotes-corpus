@@ -60,9 +60,30 @@
 <ol><li>语句原文。——《文献·篇名》</li></ol>
 <p><code>`</code></p>
 <ul><li>每条<strong>必须</strong>带出处，用 <code>——《文献》</code> 收尾；</li><li>存疑、伪托、或通俗化改写的条目，用 <code>⚠️</code> 标记，并归入文末「说明」；</li><li>译文类标 <code>〔译〕</code>（措辞随译本而异）。</li></ul>
-<h3>4.4 两维度的判定规则（保持一致，便于统计）</h3>
-<div class='tw'><table><thead><tr><th>维度</th><th>判定标准</th><th>典型主题</th></tr></thead><tbody><tr><td><strong>A · 对自我的认知</strong></td><td>主语为「我/吾/心/性」或指向自我修养、自我判断</td><td>自省、欲望、恐惧、生死、人格理想、自知之明、精神自由</td></tr><tr><td><strong>B · 对外界的认知</strong></td><td>指向我之外的他人、社会、自然、宇宙、语言、知识</td><td>政治、伦理关系、天道、自然规律、认识论、群体行为、是非标准</td></tr></tbody></table></div>
-<p><strong>边界处理</strong>：「我」与「世界」同构的句子（如「天地与我并生」），计入 B 类并在条目后标 <code>#self-other</code>，供后续单独统计。</p>
+<h3>4.4 判定规则（<strong>v2</strong>，2026-09-21 修订）</h3>
+<blockquote>⚠️ <strong>本节是全文的关键前置条件。</strong> v1 规则经审计确认<strong>不可复现</strong>：38.1% 的条目落在两可区，不确定带宽 <strong>7.1 个百分点</strong>——<strong>大于本库任何统计效应</strong>。规则不修，后面所有 A/B 比较都无意义。</blockquote>
+<h4>4.4.1 v1 规则的三个缺陷（审计结论）</h4>
+<div class='tw'><table><thead><tr><th>缺陷</th><th>证据</th></tr></thead><tbody><tr><td><strong>两个独立标准被写成「或」</strong></td><td>v1 同时用了「句法主语」与「主题域」两个互相独立的标准。<strong>320 条（占 A 类 15.0%）有自称词但主题偏 B</strong>，被规则的两半同时认领</td></tr><tr><td><strong>B 是杂类（catch-all）</strong></td><td>B 把「他人／社会／自然／宇宙／语言／知识」五个不同对象域塞成一类。而<strong>认识论的主体本就是认知者自己</strong>——笛卡尔「我思故我在」因此归哪边都不对</td></tr><tr><td><strong>补丁无口径地位</strong></td><td><code>#self-other</code> 用了 34 条，但 <strong>A 类 16 条、B 类 18 条</strong>——同一现象被拆到两边。同一个人（陆九渊）「宇宙便是吾心」标 A，「宇宙内事是己分内事」标 B</td></tr></tbody></table></div>
+<p><strong>审计脚本</strong>：<code>审查-判定规则.py</code>（可复跑）。实测：</p>
+<ul><li>含自称／自指词（我吾己予余自）的条目 <strong>1578 条（35.0%）</strong></li><li>规则两半打架 <strong>320 条（A 类的 15.0%）</strong></li><li>不确定区（同时含 A/B 两类线索）<strong>1717 条（38.1%）</strong></li><li><code>#self-other</code> <strong>34 条</strong>，A 类 16 ／ B 类 18</li><li>含「心／性」却标 B 的 <strong>354 条</strong>（而 v1 明说 A 的主语可以是「心／性」）</li></ul>
+<p><strong>后果</strong>——全库 A 占比随读法在 <strong>40.2% – 47.3%</strong> 之间浮动：</p>
+<div class='tw'><table><thead><tr><th>对照项</th><th>量级</th></tr></thead><tbody><tr><td><strong>判定规则不确定带宽</strong></td><td><strong>7.1 pp</strong></td></tr><tr><td>单样本标准误 SE</td><td>6.7 pp</td></tr><tr><td>关切最大组间差（修养 50.1% vs 制度 44.3%）</td><td>5.8 pp</td></tr><tr><td>传统（文化）能解释的方差</td><td>η² = 6.5%</td></tr></tbody></table></div>
+<blockquote><strong>规则的不确定性（7.1 pp）大于标准误（6.7 pp），也大于关切效应（5.8 pp）。</strong> 这是"配额截断"之外，第二个必须先修的前置问题。</blockquote>
+<h4>4.4.2 v2 规则：拆成两个正交字段，A/B 降级为派生量</h4>
+<p><strong>字段一 · 对象域（Object）</strong>——这条语句<strong>在谈论什么</strong></p>
+<div class='tw'><table><thead><tr><th>取值</th><th>判定</th><th>例</th></tr></thead><tbody><tr><td><code>自我</code></td><td>关于「我是什么／我应当成为什么」的判断</td><td>「我思故我在」「仁义礼智我固有之」</td></tr><tr><td><code>他者</code></td><td>他人、人际、社会、政治</td><td>「己所不欲勿施于人」「法不阿贵」</td></tr><tr><td><code>世界</code></td><td>自然、宇宙、物</td><td>「天行有常」「宇宙即变化」</td></tr><tr><td><code>符号</code></td><td>语言、名、知识本身</td><td>「道可道非常道」「我的语言的界限…」</td></tr><tr><td><code>同一</code></td><td><strong>我与世界的关系本身</strong></td><td>「天地与我并生」「世界，是我的表象」</td></tr></tbody></table></div>
+<p><strong>字段二 · 陈述类型（Claim）</strong>——这句<strong>话在做什么</strong></p>
+<p><code>描述</code>（是什么）／<code>规范</code>（应当如何）／<code>方法</code>（如何做到）</p>
+<p><strong>判定用「改写测试」，可复现</strong>：把句子改写成「它回答了哪个问题？」</p>
+<p><code>`</code> "我是什么／我应当成为什么"  → 自我 "他人／社会应当如何"        → 他者 "世界如何运作"              → 世界 "我们如何知道／如何言说"     → 符号 "我与世界是不是一回事"       → 同一 <code>`</code></p>
+<p><strong>以「谈论对象」为准，不以出现的字为准。</strong> 三条校正示例：</p>
+<div class='tw'><table><thead><tr><th>句子</th><th>v1 归属</th><th>v2 归属</th><th>理由</th></tr></thead><tbody><tr><td>「己所不欲，勿施于人」</td><td>A（有「己」）</td><td><strong>他者</strong></td><td>回答的是"他人应如何被对待"</td></tr><tr><td>「吾尝终日而思矣，不如须臾之所学也」</td><td>A（有「吾」）</td><td><strong>符号</strong></td><td>回答的是"如何获得知识"</td></tr><tr><td>「宇宙便是吾心，吾心即是宇宙」</td><td>两可</td><td><strong>同一</strong></td><td>回答的是"我与世界是不是一回事"</td></tr></tbody></table></div>
+<p><strong>A/B 降级为派生聚合</strong>（保留与旧数据的可比性）：</p>
+<p><code>`</code> A · 对自我的认知 = 对象域 ∈ {自我} B · 对外界的认知 = 对象域 ∈ {他者, 世界, 符号} 同一             = 对象域 ∈ {同一}      ← 单列，不并入 B <code>`</code></p>
+<p><code>#self-other</code> 由自由手打的补丁<strong>升格为机读取值 <code>同一</code></strong>，位置固定在出处之前。</p>
+<h4>4.4.3 待办：重新标注</h4>
+<p>v2 规则需<strong>重新标注全部 4505 条</strong>方可生效。当前库仍是 v1 口径，因此：</p>
+<ol><li>现有 A/B 数字<strong>仍可用于探索</strong>，但任何组间比较必须标注「v1 规则下」，且不得作为结论；</li><li>重标时优先复核三类：<strong>320 条冲突项 → 34 条 <code>同一</code> 项 → 354 条含「心／性」的 B 类项</strong>；</li><li>重标完成后重跑 <code>工具-统计校验.py</code> 与 <code>分析-多维模型.py</code>，替换全部数字。</li></ol>
 <hr>
 <h2>5. 统计与进度</h2>
 <h3>5.1 全库统计总表（77 人 · 4505 条）</h3>
