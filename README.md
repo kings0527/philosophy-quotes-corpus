@@ -6,6 +6,14 @@ updated: 2026-09-21
 
 # 哲学统计 · 总览索引
 
+> ## 🔗 在线站点：https://kings0527.github.io/philosophy-quotes-corpus/
+>
+> 本站含 77 个人物页（每人带出处的完整语录）、可筛选的**哲学坐标表**、十二条轴逐轴论证、**定稿结论页**与完整的信度检验记录。
+> 快速入口：[结论](https://kings0527.github.io/philosophy-quotes-corpus/conclusion.html) ·
+> [坐标表](https://kings0527.github.io/philosophy-quotes-corpus/coordinates.html) ·
+> [人物索引](https://kings0527.github.io/philosophy-quotes-corpus/people.html) ·
+> [分析](https://kings0527.github.io/philosophy-quotes-corpus/analysis.html)
+
 ## 0. 这个项目是什么
 
 把古今中外哲学家、思想家的**有出处语句**摘录成结构化语料库，供后续做「哲学统计」——比如：统计各派别在「自我认知」与「外界认知」上的比重差异、不同时代的问题意识迁移、中西对比等。
