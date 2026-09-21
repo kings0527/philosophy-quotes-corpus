@@ -22,7 +22,8 @@ DOCS = os.path.join(ROOT, "docs")
 SHORT = {"海亚姆（奥马尔·海亚姆）": "海亚姆"}
 NAV = [("index.html", "扉页"), ("about.html", "介绍"), ("outline.html", "大纲"),
        ("corpus.html", "资料"), ("people.html", "人物索引"),
-       ("coordinates.html", "坐标表"), ("analysis.html", "分析")]
+       ("coordinates.html", "坐标表"), ("analysis.html", "分析"),
+       ("conclusion.html", "结论")]
 
 
 def slug(name):
@@ -36,12 +37,14 @@ def load_data():
             return list(csv.DictReader(fp))
     cor = {r["人物"]: r for r in rd("统计总表.csv")}
     meta = {r["人物"]: r for r in rd("元数据.csv")}
+    v2 = {r["人物"]: r for r in rd("统计总表-v2.csv")}
     coord = rd("坐标表.csv")
     data = []
     for c in coord:
         n = c["人物"]
         a = cor[n]
         m = meta.get(n, {})
+        w = v2.get(n, {})
         data.append({
             "name": n, "slug": slug(n), "file": a["文件"].replace("/", os.sep),
             "trad": c["传统"], "school": c["派别"],
@@ -53,6 +56,10 @@ def load_data():
             "concern": m.get("核心关切", ""),
             "A": int(a["A对自我"]), "B": int(a["B对外界"]), "N": int(a["合计"]),
             "share": round(float(a["A占比"]) * 100),
+            "self": int(w.get("自我", 0)), "other": int(w.get("他者", 0)),
+            "world": int(w.get("世界", 0)), "sign": int(w.get("符号", 0)),
+            "same": int(w.get("同一", 0)),
+            "v2share": float(w.get("v2A占比", 0) or 0),
         })
     return data
 
@@ -375,6 +382,7 @@ def main():
 <h1>哲学统计</h1>
 <p class="lead">把 77 位哲学家、思想家的 4505 条带出处语句，聚合到十二条互相独立的轴上，
 <br>再收敛为五个必须表态的问题。</p>
+<div class="chips"><span class="chip">定稿 <b>v1.0 · 2026-09-21</b></span><span class="chip">对象域盲编码 <b>κ=0.864</b></span><span class="chip">v2 个体跨度 <b>91.7 pp</b></span></div>
 <div class="stats">
 <div class="stat"><b>77</b><i>思想家</i></div>
 <div class="stat"><b>4,505</b><i>带出处语句</i></div>
@@ -388,6 +396,7 @@ def main():
 <a class="card" href="people.html"><h3>人物索引</h3><p>一人一页，含坐标取值与语录全文</p></a>
 <a class="card" href="coordinates.html"><h3>坐标表</h3><p>77 人 × 四问取值的可筛选总表</p></a>
 <a class="card" href="analysis.html"><h3>分析</h3><p>升维聚合：十二轴逐轴论证与统合归总</p></a>
+<a class="card" href="conclusion.html"><h3>结论</h3><p>定稿结论：换尺子前后，差异从「测不出」变成「极大」</p></a>
 </div>
 <h2>五个问题</h2>
 <p>十二条轴收敛为五个必须表态的问题——不回答本身就是一种回答（取默认值）。</p>
@@ -469,8 +478,9 @@ def main():
     write("corpus.html", shell("资料", """
 <h1>资料</h1>
 <p class="lead">77 位思想家的语录库总览。每一行可进入单人页，查看带《文献》出处的完整条目。</p>
-<div class="chips"><span class="chip">⚠️ 表内 <b>A／B 条数</b>为 <b>v1 判定规则</b>下的口径</span>
-<span class="chip">v1 不确定带宽 <b>7.1 pp</b></span>
+<div class="chips"><span class="chip">表内 <b>A／B 条数</b>＝v1 口径</span>
+<span class="chip"><b>A(v2)</b>＝对象域盲编码（κ=0.864）口径</span>
+<span class="chip">两者均值相近、个体差异极大</span>
 <span class="chip"><a href="about.html" style="color:inherit">规则修订说明 →</a></span></div>
 <div class="fbar">
 <input id="q" placeholder="搜索人名或派别…">
@@ -483,7 +493,7 @@ def main():
 <thead><tr><th class="s" data-k="name">人物</th><th class="s" data-k="trad">传统</th>
 <th class="s" data-k="school">派别</th><th class="s" data-k="genre">文体</th>
 <th class="s" data-k="rel">可靠度</th><th class="s" data-k="A">A 自我</th>
-<th class="s" data-k="B">B 外界</th><th class="s" data-k="N">合计</th></tr></thead>
+<th class="s" data-k="B">B 外界</th><th class="s" data-k="N">合计</th><th class="s" data-k="v2share">A(v2) 对象域</th></tr></thead>
 <tbody></tbody></table></div>
 """, "corpus.html"))
 
@@ -505,7 +515,7 @@ def main():
 <th class="s" data-k="axis2">②不动层</th><th class="s" data-k="purpose">⑤目的</th>
 <th class="s" data-k="axis3a">③先验</th>
 <th class="s" data-k="axis3b">③秩序</th><th class="s" data-k="axis4b">④可改变</th>
-<th class="s" data-k="axis4c">④干预</th></tr></thead>
+<th class="s" data-k="axis4c">④干预</th><th class="s" data-k="v2share">A(v2) 对象域</th></tr></thead>
 <tbody></tbody></table></div>
 """, "people.html"))
 
@@ -578,6 +588,96 @@ def main():
         '<p class="lead">这份语料库能支撑什么结论、不能支撑什么结论——量化的边界。</p>'
         + md2html(rep), "analysis.html"))
 
+    # ── 结论页（定稿） ──
+    top = sorted(data, key=lambda d: -d["v2share"])[:6]
+    bot = sorted(data, key=lambda d: d["v2share"])[:6]
+    row = lambda d: ('<tr><td><a href="people/%s.html">%s</a></td><td class="n">%d</td>'
+                     '<td class="n">%d</td><td class="n">%.1f%%</td></tr>'
+                     % (d["slug"], d["name"], d["N"], d["self"], d["v2share"]))
+    write("conclusion.html", shell("结论", """
+<h1>结论</h1>
+<p class="lead">用 WorkBuddy 统计升维 77 位哲学家的智慧 —— 定稿结论。</p>
+
+<div class="chips"><span class="chip">版本 <b>v1.0</b></span>
+<span class="chip">77 人 · <b>4,505</b> 条</span>
+<span class="chip">对象域盲编码 · <b>κ=0.864</b></span>
+<span class="chip">三套独立方法校验</span></div>
+
+<h2>一句话结论</h2>
+<blockquote><strong>「自我／外界」这把尺子换好了以后，77 位思想家之间的差异不是「测不出」，而是「极大」——
+个体间的 A 占比跨度从 34 个百分点扩到 <strong>92 个百分点</strong>。
+而全库均值几乎没动（47.1% → 47.2%）。</strong></blockquote>
+
+<h2>尺子是怎么坏的</h2>
+<p>第一版判定规则写的是「主语为『我／吾／心／性』，或指向自我修养」。
+这等于把「自我」「他者」「世界」「符号」<strong>四类不同的谈论对象混成一个 A 类</strong>。
+后果是每个思想家都像在均衡地谈自己与世界——因为分类本身不区分对象。</p>
+<p>实测证据：51%（39/77）的人 A 占比<strong>恰好</strong>等于 50.0%，而纯随机只该出现 6.7 人。</p>
+
+<h2>换成「对象域」之后</h2>
+<p>新规则只问一句：<strong>这句话在谈论什么？</strong>
+回答五选一 —— <code>自我</code> / <code>他者</code> / <code>世界</code> / <code>符号</code> / <code>同一</code>。</p>
+<p>两名独立编码员盲编码 150 条，<strong>κ = 0.864</strong>（一致率 90.0%）；
+再用不同批编码者的重叠项交叉验证，<strong>κ = 0.818 / 0.774</strong>。尺子是稳的。</p>
+
+<h2>换尺前后的对照</h2>
+<div class="tw"><table><thead><tr><th>指标</th><th>v1 旧尺子</th><th>v2 对象域尺子</th></tr></thead><tbody>
+<tr><td>全库 A 占比均值</td><td class="n">47.1%</td><td class="n">47.2%</td></tr>
+<tr><td>个体间标准差</td><td class="n">6.6 pp</td><td class="n" style="font-weight:500">19.0 pp</td></tr>
+<tr><td>个体间区间跨度</td><td class="n">33.7 pp</td><td class="n" style="font-weight:500">91.7 pp</td></tr>
+<tr><td>恰好落在 50.0% 的人</td><td class="n">39 人（51%）</td><td class="n">2 人（3%）</td></tr>
+<tr><td>两两比较可检出（≥MDC）</td><td class="n">273 对（9.3%）</td><td class="n">1353 对（46.2%）</td></tr>
+<tr><td>Bonferroni 校正后显著</td><td class="n" style="color:var(--amber)">0 对</td><td class="n" style="font-weight:500">422 对</td></tr>
+</tbody></table></div>
+
+<h2>两端的人</h2>
+<div class="grid">
+<div class="card"><h3>最向内（A 占比最高）</h3><p>__TOP__</p></div>
+<div class="card"><h3>最向外（A 占比最低）</h3><p>__BOT__</p></div>
+</div>
+<p style="color:var(--mut);font-size:14px">同一批人，在旧尺子下的数值全部挤在 46%–53% 之间。</p>
+
+<h2>三条可以下的结论</h2>
+<ol>
+<li><strong>「文化决定论」依然不成立。</strong>传统层 η² 从 6.5% 降到 4.2%——
+差异不在中西，在<strong>个体层</strong>。中国内部从王阳明 93% 到孙子 3%，跨度超过任何跨文化比较。</li>
+<li><strong>「修身型」与「外求型」确有截然的分别。</strong>王阳明 93%、慧能 90%、爱比克泰德 72%、
+马可·奥勒留 69%；公孙龙 2%、巴门尼德 2%、孙子 3%、商鞅 5%。
+这不是程度差异，是<strong>两种不同的思想类型</strong>。</li>
+<li><strong>旧的「测不出差异」是仪器的产物，不是世界的真相。</strong>
+同一条目、同一批人，只换分类规则，可检出对数从 273 涨到 1353，显著对数从 0 涨到 422。</li>
+</ol>
+
+<h2>方法上留下的三条</h2>
+<ol>
+<li><strong>判定规则本身要被审查。</strong>我用四组指标查过它：内部冲突率 15%、不确定区 38%、补丁分裂、
+κ=0.150。规范文档里的模糊措辞，会在统计上放大成压倒性的噪声。</li>
+<li><strong>κ（两两一致）与总量可复现性是两件事。</strong>必须做重叠项交叉验证——这次正是靠它
+（κ=0.818）才排除了「编码者群体差异」这个替代解释。</li>
+<li><strong>审计脚本的判据本身也要先验证。</strong>我的格式审计脚本前后错了两次
+（只认句号收尾、按第一个破折号切分），每次都误报数百条。</li>
+</ol>
+
+<h2>一个被自己数据否掉的推测</h2>
+<p>我曾推测：由于「自我／外界」这个二分预设了实体自我，而库中 75% 的人不接受这套预设，
+所以不确定带宽可能来自<strong>框架与被试不匹配</strong>。做成可证伪假设后检验：
+框架失配组与适配组的不确定度无显著差异（<strong>p=0.5575</strong>）；
+接受预设者与不接受者的测量误差也无差异（<strong>p=0.8259</strong>）。
+<strong>推测不成立，已撤回</strong>——真因在仪器，不在被试。</p>
+
+<blockquote>这一条比上面任何一个哲学结论都更值得保留：<strong>推测要跑检验，跑完不合格就撤回。</strong></blockquote>
+
+<h2>数据与复跑</h2>
+<div class="grid">
+<a class="card" href="coordinates.html"><h3>哲学坐标表</h3><p>77 人 × 五问取值，可筛选排序</p></a>
+<a class="card" href="analysis.html"><h3>升维聚合哲学</h3><p>十二轴逐轴论证 + 终极三问附论</p></a>
+<a class="card" href="corpus.html"><h3>语录资料库</h3><p>4,505 条带出处语句，v1/v2 双口径</p></a>
+<a class="card" href="analysis-data.html"><h3>数据可用性说明</h3><p>信度、删失、方差归属的完整记录</p></a>
+</div>
+""".replace("__TOP__", " ｜ ".join("%s %.0f%%" % (d["name"], d["v2share"]) for d in top))
+              .replace("__BOT__", " ｜ ".join("%s %.0f%%" % (d["name"], d["v2share"]) for d in bot)),
+        "conclusion.html"))
+
     # ── 人物页 ──
     for d in data:
         raw = io.open(os.path.join(ROOT, d["file"]), encoding="utf-8").read()
@@ -597,15 +697,18 @@ def main():
                  '<span class="chip">④ 互动 <b>%s</b></span>'
                  '<span class="chip">④ 可改变 <b>%s</b></span>'
                  '<span class="chip">④ 干预 <b>%s</b></span>'
-                 '<span class="chip">A %d ／ B %d</span></div>') % (
+                 '<span class="chip">A(v1) %d ／ B(v1) %d</span>'
+                 '<span class="chip">A(v2对象域) <b>%.0f%%</b></span>'
+                 '<span class="chip">自我%d 他者%d 世界%d 符号%d 同一%d</span></div>') % (
             d["axis1a"], d["axis1b"], d["axis2"], d["purpose"], d["axis3a"], d["axis3b"],
-            d["axis4a"], d["axis4b"], d["axis4c"], d["A"], d["B"])
+            d["axis4a"], d["axis4b"], d["axis4c"], d["A"], d["B"], d["v2share"],
+            d["self"], d["other"], d["world"], d["sign"], d["same"])
         body = ('<p class="crumb"><a href="people.html">人物索引</a> › '
                 '<a href="coordinates.html">%s · %s</a></p>%s%s%s') % (
             d["trad"], d["school"], chips, md2html(raw), pager)
         write("people/%s.html" % d["slug"], shell(d["name"], body, "", depth=1))
 
-    print("已生成站点：%d 页（含 %d 个人物页）" % (8 + len(data), len(data)))
+    print("已生成站点：%d 页（含 %d 个人物页）" % (9 + len(data), len(data)))
     print("输出目录：", DOCS)
 
 

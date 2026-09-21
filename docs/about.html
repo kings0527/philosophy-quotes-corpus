@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="assets/style.css"></head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="index.html">哲学<span>统计</span></a>
-<nav class="site"><a href="index.html">扉页</a><a href="about.html" class="on">介绍</a><a href="outline.html">大纲</a><a href="corpus.html">资料</a><a href="people.html">人物索引</a><a href="coordinates.html">坐标表</a><a href="analysis.html">分析</a></nav></div></header>
+<nav class="site"><a href="index.html">扉页</a><a href="about.html" class="on">介绍</a><a href="outline.html">大纲</a><a href="corpus.html">资料</a><a href="people.html">人物索引</a><a href="coordinates.html">坐标表</a><a href="analysis.html">分析</a><a href="conclusion.html">结论</a></nav></div></header>
 <main><div class="wrap"><h1>介绍</h1><p class="lead">项目目的、方法与真伪原则、轴系设计、数据口径。</p><h1>哲学统计 · 总览索引</h1>
 <h2>0. 这个项目是什么</h2>
 <p>把古今中外哲学家、思想家的<strong>有出处语句</strong>摘录成结构化语料库，供后续做「哲学统计」——比如：统计各派别在「自我认知」与「外界认知」上的比重差异、不同时代的问题意识迁移、中西对比等。</p>
@@ -132,16 +132,21 @@
 <p>这五个问题穷尽了「一个人必须表态的东西」——不回答本身就是一种回答（取默认值）。每位哲学家的全部主张，都可以表示为这五个问题的一组取值（对照表见 <code>升维聚合哲学.md</code> §3.2）。</p>
 <h3>6.3 归总</h3>
 <blockquote><strong>哲学史上看起来无穷无尽的分歧，是四个问题的取值差异。没有第五个问题。</strong><br><br>其中<strong>第二个问题最关键</strong>：你选哪一层作为不变的支点，决定了其余三个问题的答案。<br>不动点设在「天」→ 儒家；设在「法」→ 法家；设在「缘起」→ 佛家；设在「我思」→ 笛卡尔。</blockquote>
-<h3>6.4 数据可用性限制（读语料时必看）</h3>
-<p>以下五条是<strong>数据层面的限制</strong>，不是分析结论，但会影响任何基于本语料库的量化推断：</p>
-<ol><li><strong>⚠️ 尺子本身不可信（最要紧的一条）</strong>。把「自我／外界」当测量工具做信度检验（<code>信度检验.py</code>）：两名独立评分者对 3329 条重新分类，<strong>κ = 0.150</strong>——低于 0.20 的作废线。由此推出的<strong>最小可检出差异 MDC = 16.9 pp</strong>。这意味着<strong>本库此前报告的全部组间差都沉在噪声里</strong>：</li></ol>
-<div class='tw'><table><thead><tr><th>效应</th><th>量级</th><th>判定</th></tr></thead><tbody><tr><td>传统组间差（中国 vs 西方）</td><td>2.7 pp</td><td>✗ 不可检出</td></tr><tr><td>关切最大组间差（修养 vs 制度）</td><td>5.8 pp</td><td>✗ 不可检出</td></tr><tr><td>判定规则不确定带宽</td><td>7.1 pp</td><td>✗ 不可检出</td></tr><tr><td><strong>德谟克利特 vs 巴门尼德（自然实验）</strong></td><td><strong>32.0 pp</strong></td><td><strong>✓ 可检出</strong></td></tr></tbody></table></div>
-<p><strong>好消息</strong>：换用 §4.4.2 的对象域规则后，评分者间信度 <strong>κ = 0.864</strong>（两名独立编码员盲编码 150 条，一致率 90.0%），<strong>MDC 降至 6.8 pp</strong>。尺子是可修的。</p>
-<ol><li><strong>⚠️ 全库 A 占比要修正：不是 47.3%</strong>。三套互相独立的方法（对象域盲编码 40.3%、句法判据 35.0%、主题判据 36.6%）<strong>都收敛到 36–40%</strong>，而现标 47.3% 孤立在外——<strong>现标系统性高估了约 8–11 pp</strong>（v2 编码与现标的一致性 κ=0.644，A 率差 8.1 pp）。</li></ol>
-<ol><li><strong>编纂配额截断</strong>：51%（39/77）的 A 占比恰好 = 50.0%，纯二项随机期望仅 6.7 人（超出 5.8 倍）。数据生成过程实为 <code>观测A占比 = min(材料自指可及比例, 配额上限≈50%)</code>，即<strong>右删失</strong>——65 个 ≈50% 的样本观测值不携带独立信息，<strong>有效样本是左尾 12 人而非 77 人</strong>。</li></ol>
-<ol><li><strong>方差归属</strong>：可靠度 η²=31.2%、文体 η²=26.5%、核心关切 η²=26.3%，而<strong>传统（中/西/印/伊斯兰波斯/日）仅 η²=6.5%</strong>。差异主要来自传承结构，不是文化。</li></ol>
-<ol><li><strong>自然实验</strong>：德谟克利特（A=51.6%）vs 巴门尼德（A=19.6%）——同代、同传统、同为残篇，仅因伦理格言是否幸存而相差 32.0 pp。<strong>「低 A 占比」记录的是幸存者偏差，不是思想取向。</strong></li></ol>
-<blockquote>详细论证见 <code>升维分析报告.md</code>；信度检验的可复跑脚本为 <code>信度检验.py</code> 与 <code>编码一致性.py</code>，<br>盲编码原始数据为 <code>编码样本.csv</code>／<code>编码-甲.csv</code>／<code>编码-乙.csv</code>。</blockquote></div></main>
+<h3>6.4 数据可用性限制与定稿结论（读语料时必看）</h3>
+<h4>一、旧尺子（v1）测出的「无差异」是仪器造成的</h4>
+<p>v1 规则把「自我／他者／世界／符号」四类<strong>不同的谈论对象混成一个 A 类</strong>。后果：</p>
+<ul><li>两名独立评分者 κ = <strong>0.150</strong>（低于 0.20 作废线）</li><li>由 κ 推 <strong>MDC = 16.9 pp</strong>；<strong>51%（39/77）的人 A 占比恰好 = 50.0%</strong>（纯随机只该 6.7 人）</li><li>2926 对比较中，Bonferroni 校正后<strong>无一对显著</strong></li></ul>
+<h4>二、新尺子（v2）与换尺后的对照</h4>
+<p>新规则只问「这句话在谈论什么」，五选一：<code>自我</code>／<code>他者</code>／<code>世界</code>／<code>符号</code>／<code>同一</code>。 两名独立编码员盲编码 150 条 <strong>κ = 0.864</strong>；再用<strong>不同批编码者的重叠项</strong>交叉验证 <strong>κ = 0.818 / 0.774</strong>。 经此校正后对<strong>全库 4505 条</strong>重新编码（15 个分片、打乱后编码以消除「编码者偏差与人物混淆」）：</p>
+<div class='tw'><table><thead><tr><th>指标</th><th>v1 旧尺子</th><th>v2 对象域尺子</th></tr></thead><tbody><tr><td>全库 A 占比均值</td><td>47.1%</td><td><strong>47.2%</strong></td></tr><tr><td><strong>个体间标准差</strong></td><td>6.6 pp</td><td><strong>19.0 pp</strong></td></tr><tr><td><strong>个体间区间跨度</strong></td><td>33.7 pp</td><td><strong>91.7 pp</strong></td></tr><tr><td>恰好落在 50.0% 的人</td><td>39 人（51%）</td><td><strong>2 人（3%）</strong></td></tr><tr><td>两两比较可检出（≥MDC）</td><td>273 对（9.3%）</td><td><strong>1353 对（46.2%）</strong></td></tr><tr><td>Bonferroni 校正后显著</td><td><strong>0 对</strong></td><td><strong>422 对</strong></td></tr></tbody></table></div>
+<p><strong>均值几乎未动，个体差异扩大近三倍。</strong> 所以此前的「测不出差异」是<strong>仪器的产物</strong>，不是世界的真相。</p>
+<h4>三、定稿结论</h4>
+<ol><li><strong>「文化决定论」仍不成立。</strong> 传统层 η² 从 6.5% 降至 <strong>4.2%</strong>——差异在个体层。中国内部从王阳明 93% 到孙子 3%，跨度超过任何跨文化比较。</li><li><strong>「内求型」与「外求型」是两种思想类型，不是程度差异。</strong> 王阳明 93%、慧能 90%、爱比克泰德 72%、马可·奥勒留 69% ／ 公孙龙 2%、巴门尼德 2%、孙子 3%、商鞅 5%。</li><li><strong>⚠️ 全库 A 占比修正为 47.2%。</strong> 此前基于 150 条样本估的「36–40%」<strong>是抽样波动，不成立</strong>——按样本人物构成加权后为 43.4%，实测 38.7%，差距在 1.2 个标准误内。<strong>以全库 4505 条的重编结果为准。</strong></li></ol>
+<h4>四、仍然成立的三条旧结论</h4>
+<ol><li><strong>编排配额截断</strong>：旧尺子下 51% 的人恰好 50%，源于编纂时「每维度均衡取条」的配额。这一现象本身是真的，但它掩盖的不是「无差异」而是「差异极大」。</li><li><strong>传承结构仍是强混淆</strong>：可靠度 η²=31.2%、文体 η²=26.5%（v1 口径）。残篇在低 A 尾部富集 4.6 倍。</li><li><strong>自然实验</strong>：德谟克利特 vs 巴门尼德——同代、同传统、同为残篇，<strong>v1 相差 32 pp；v2 相差 49.6 pp</strong>（51.6% vs 2.0%）。</li></ol>
+<h4>五、一个被我自己的数据否证的推测</h4>
+<p>我曾推测测量不确定带宽来自「框架与被试不匹配」（库里 75% 的人不接受实体自我预设）。 做成可证伪假设后检验：H3 框架失配 <strong>p=0.5575</strong>、H4 三问预设 <strong>p=0.8259</strong>，<strong>均不成立，已撤回</strong>。 真因在仪器定义模糊，不在被试。</p>
+<blockquote>复跑：<code>信度检验.py</code>（v1 信度与 MDC）、<code>编码一致性.py</code>（v2 跨批信度）、<code>全库对象域.csv</code>（重编结果）。<br>定稿结论页：站点 <code>/conclusion.html</code>。</blockquote></div></main>
 <footer><div class="wrap">哲学统计 · 77 位哲学家 / 4505 条带出处语句 ｜
 <a href="outline.html">大纲</a> · <a href="coordinates.html">坐标表</a> ·
 <a href="analysis.html">分析</a></div></footer>
