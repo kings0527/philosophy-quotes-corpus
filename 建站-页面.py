@@ -195,8 +195,10 @@ font-family:-apple-system,"Segoe UI","PingFang SC",sans-serif}
 table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{padding:9px 13px;text-align:left;border-bottom:.5px solid var(--line);vertical-align:top}
 th{font-family:-apple-system,"Segoe UI","PingFang SC",sans-serif;font-size:12.5px;font-weight:500;
-color:var(--mut);background:var(--soft);white-space:nowrap;position:sticky;top:45px}
+color:var(--mut);background:var(--soft);white-space:nowrap}
 tbody tr:last-child td{border-bottom:0}
+.tw.tall{max-height:74vh;overflow:auto}
+.tw.tall th{position:sticky;top:0;z-index:1}
 tbody tr:hover{background:var(--soft)}
 th.s{cursor:pointer;user-select:none}
 th.s:hover{color:var(--accent)}
@@ -220,7 +222,7 @@ font-family:-apple-system,"Segoe UI","PingFang SC",sans-serif}
 footer a{color:var(--dim)}
 ol,ul{padding-left:1.5em;margin:0 0 16px}
 li{margin:0 0 6px}
-@media(max-width:640px){h1{font-size:22px}main{padding:28px 0 60px}th{position:static}}
+@media(max-width:640px){h1{font-size:22px}main{padding:28px 0 60px}}
 @media print{header.top,footer,nav.site{display:none}}
 """
 
@@ -471,7 +473,7 @@ def main():
 <select id="f-rel"><option value="">全部可靠度</option></select>
 <span class="cnt"></span>
 </div>
-<div class="tw"><table id="t">
+<div class="tw tall"><table id="t">
 <thead><tr><th class="s" data-k="name">人物</th><th class="s" data-k="trad">传统</th>
 <th class="s" data-k="school">派别</th><th class="s" data-k="genre">文体</th>
 <th class="s" data-k="rel">可靠度</th><th class="s" data-k="A">A 自我</th>
@@ -491,7 +493,7 @@ def main():
 <select id="f-axis1a"><option value="">全部界线</option></select>
 <span class="cnt"></span>
 </div>
-<div class="tw"><table id="t">
+<div class="tw tall"><table id="t">
 <thead><tr><th class="s" data-k="name">人物</th><th class="s" data-k="trad">传统</th>
 <th class="s" data-k="axis1a">①界线</th><th class="s" data-k="axis1b">①关系</th>
 <th class="s" data-k="axis2">②不动层</th><th class="s" data-k="axis3a">③先验</th>
@@ -515,7 +517,7 @@ def main():
 <select id="f-axis4c"><option value="">全部干预</option></select>
 <span class="cnt"></span>
 </div>
-<div class="tw"><table id="t">
+<div class="tw tall"><table id="t">
 <thead><tr><th class="s" data-k="name">人物</th>
 <th class="s" data-k="axis1a">①界线</th><th class="s" data-k="axis1b">①关系</th>
 <th class="s" data-k="axis2">②不动层</th>
