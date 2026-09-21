@@ -67,6 +67,8 @@ def classify(line):
     pre, tail = split_src(body)
     if pre is None:
         return "E"
+    if re.search(r"——\s*。", pre):
+        return "H"
     if not pre.rstrip() or pre.rstrip()[-1] not in END:
         return "B"
     if not re.match(r"^\s*" + MARK + r"*\s*《", tail) and not tail.lstrip().startswith("《"):
@@ -131,7 +133,7 @@ def main():
             k = classify(line)
             stat[k] = stat.get(k, 0) + 1
             samples.setdefault(k, []).append((os.path.basename(f)[:-3], line[:64]))
-            if fix and k in ("B", "C", "E", "F", "G"):
+            if fix and k in ("B", "C", "E", "F", "G", "H"):
                 new, ch = normalize(line)
                 if ch:
                     lines[i] = new
@@ -142,18 +144,18 @@ def main():
             touched.append(os.path.basename(f)[:-3])
 
     total = sum(stat.values())
-    name = {"A": "A 规范（句读 → 《》出处）", "B": "B 句读异常",
+    name = {"A": "A 规范（句读 → 《》出处）", "B": "B 句读异常", "H": "H 句末多余破折号（——。）",
             "C": "C 出处非《》式", "D": "D 出处后有附注/标记（正常）",
             "E": "E 无分隔符", "F": "F 标记带反引号", "G": "G 标记挂在句首"}
     print("=" * 76)
     print("§4.3 条目格式一致性审计" + ("　【已执行 --fix】" if fix else "　【只读】"))
     print("=" * 76)
     print("条目总数 %d\n" % total)
-    for k in ["A", "B", "C", "D", "E", "F", "G"]:
+    for k in ["A", "B", "C", "D", "E", "F", "G", "H"]:
         v = stat.get(k, 0)
         print("  %-30s %5d 条  %5.1f%%" % (name[k], v, v / total * 100))
     print()
-    for k in ["B", "C", "E", "F", "G"]:
+    for k in ["B", "C", "E", "F", "G", "H"]:
         if stat.get(k):
             print("─ %s（%d 条）样例：" % (name[k], stat[k]))
             for who, line in samples[k][:3]:
