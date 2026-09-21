@@ -36,7 +36,10 @@ def main():
     rows = []
     problems = []
     for path in sorted(glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True)):
-        if os.path.basename(path).startswith(("README", "统计总表", "工具")):
+        if os.path.basename(path).startswith(
+                ("README", "统计总表", "工具", "升维", "分析", "审查", "坐标表", "建站")):
+            continue
+        if os.sep + "docs" + os.sep in path:
             continue
         rel = os.path.relpath(path, ROOT).replace(os.sep, "/")
         with open(path, encoding="utf-8") as fp:
