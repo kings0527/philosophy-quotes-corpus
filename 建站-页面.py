@@ -46,6 +46,7 @@ def load_data():
             "name": n, "slug": slug(n), "file": a["文件"].replace("/", os.sep),
             "trad": c["传统"], "school": c["派别"],
             "axis1a": c["①界线"], "axis1b": c["①关系"], "axis2": c["②不动层"],
+            "purpose": c["⑤目的"],
             "axis3a": c["③先验"], "axis3b": c["③秩序来源"],
             "axis4a": c["④互动"], "axis4b": c["④可改变"], "axis4c": c["④干预"],
             "genre": m.get("文体", ""), "rel": m.get("可靠度", ""),
@@ -373,12 +374,12 @@ def main():
     write("index.html", shell("扉页", """
 <h1>哲学统计</h1>
 <p class="lead">把 77 位哲学家、思想家的 4505 条带出处语句，聚合到十二条互相独立的轴上，
-<br>再收敛为四个必须表态的问题。</p>
+<br>再收敛为五个必须表态的问题。</p>
 <div class="stats">
 <div class="stat"><b>77</b><i>思想家</i></div>
 <div class="stat"><b>4,505</b><i>带出处语句</i></div>
 <div class="stat"><b>12</b><i>坐标轴</i></div>
-<div class="stat"><b>4</b><i>根本问题</i></div>
+<div class="stat"><b>5</b><i>根本问题</i></div>
 </div>
 <div class="grid">
 <a class="card" href="about.html"><h3>介绍</h3><p>项目目的、方法与真伪原则、轴系设计、数据口径</p></a>
@@ -388,8 +389,8 @@ def main():
 <a class="card" href="coordinates.html"><h3>坐标表</h3><p>77 人 × 四问取值的可筛选总表</p></a>
 <a class="card" href="analysis.html"><h3>分析</h3><p>升维聚合：十二轴逐轴论证与统合归总</p></a>
 </div>
-<h2>四个问题</h2>
-<p>十二轴收敛为四个必须表态的问题——不回答本身就是一种回答（取默认值）。</p>
+<h2>五个问题</h2>
+<p>十二条轴收敛为五个必须表态的问题——不回答本身就是一种回答（取默认值）。</p>
 <div class="tw"><table>
 <thead><tr><th>问题</th><th>由哪些轴构成</th></tr></thead>
 <tbody>
@@ -397,7 +398,9 @@ def main():
 <tr><td><strong>② 哪一层不动？</strong></td><td>时间 · 纵深</td></tr>
 <tr><td><strong>③ 秩序和知识从哪里来？</strong></td><td>信道 · 更新 · 涌现</td></tr>
 <tr><td><strong>④ 我能改变什么？</strong></td><td>模态 · 互动 · 尺度 · 干预</td></tr>
+<tr><td><strong>⑤ 我到哪里去？</strong></td><td>目的（v3 新增）</td></tr>
 </tbody></table></div>
+<p style="color:var(--mut);font-size:14px">①②⑤ 合起来即「我是谁 · 我从哪里来 · 我到哪里去」；③④ 是三问接不住的「运作两问」。</p>
 <h2>覆盖</h2>
 <p>%s</p>
 <p style="color:var(--mut);font-size:14px">A 类「对自我的认知」%d 条 ／ B 类「对外界的认知」%d 条</p>
@@ -414,7 +417,7 @@ def main():
 <h1>大纲</h1>
 <p class="lead">全书结构：从四个问题出发，展开为十二条轴，落到 77 个人。</p>
 
-<h2>第一层 · 四个问题</h2>
+<h2>第一层 · 五个问题</h2>
 <div class="tw"><table><thead><tr><th>#</th><th>问题</th><th>构成轴</th><th>取值</th></tr></thead><tbody>
 <tr><td>①</td><td>我在哪里结束，世界在哪里开始？</td><td>界线 · 关系</td>
 <td>未分／二分／统一 ｜ 关系／实体</td></tr>
@@ -423,7 +426,10 @@ def main():
 <td>先验：厚／薄／零 ｜ 秩序来源：设计／涌现／兼有</td></tr>
 <tr><td>④</td><td>我能改变什么？</td><td>模态 · 互动 · 尺度 · 干预</td>
 <td>互动：伙伴／对手／共在／独在 ｜ 可改变：我／心／制度／条件／关系／无 ｜ 干预：法／心／理·天／自然</td></tr>
+<tr><td>⑤</td><td>我到哪里去？</td><td>目的</td>
+<td>成德·成圣 ／ 合道·逍遥 ／ 解脱·涅槃 ／ 见真·合一 ／ 不动心 ／ 幸福·繁荣 ／ 本真·自由 ／ 知·理解 ／ 治·秩序 ／ 当下·无求</td></tr>
 </tbody></table></div>
+<p style="color:var(--mut);font-size:14px">①②⑤ 合起来即「我是谁 · 我从哪里来 · 我到哪里去」。③④ 问的是「怎么运转」，三问接不住。</p>
 
 <h2>第二层 · 十二条轴（四组）</h2>
 <div class="grid">
@@ -452,7 +458,7 @@ def main():
 
 <h2>阅读路径建议</h2>
 <ol>
-<li><strong>想快速抓住全貌</strong>：扉页 → 坐标表（按「不动层」排序）→ 分析 §归总</li>
+<li><strong>想快速抓住全貌</strong>：扉页 → 坐标表（按「不动层」或「目的」排序）→ 分析 §归总</li>
 <li><strong>想读哲学</strong>：分析（十二轴全文）→ 遇到感兴趣的人再点进人物页</li>
 <li><strong>想查资料</strong>：资料 → 人物索引 → 单人页（带出处的完整语录）</li>
 <li><strong>想核数据</strong>：介绍 §方法与真伪原则 → 数据可用性说明</li>
@@ -496,7 +502,8 @@ def main():
 <div class="tw tall"><table id="t">
 <thead><tr><th class="s" data-k="name">人物</th><th class="s" data-k="trad">传统</th>
 <th class="s" data-k="axis1a">①界线</th><th class="s" data-k="axis1b">①关系</th>
-<th class="s" data-k="axis2">②不动层</th><th class="s" data-k="axis3a">③先验</th>
+<th class="s" data-k="axis2">②不动层</th><th class="s" data-k="purpose">⑤目的</th>
+<th class="s" data-k="axis3a">③先验</th>
 <th class="s" data-k="axis3b">③秩序</th><th class="s" data-k="axis4b">④可改变</th>
 <th class="s" data-k="axis4c">④干预</th></tr></thead>
 <tbody></tbody></table></div>
@@ -520,7 +527,7 @@ def main():
 <div class="tw tall"><table id="t">
 <thead><tr><th class="s" data-k="name">人物</th>
 <th class="s" data-k="axis1a">①界线</th><th class="s" data-k="axis1b">①关系</th>
-<th class="s" data-k="axis2">②不动层</th>
+<th class="s" data-k="axis2">②不动层</th><th class="s" data-k="purpose">⑤目的</th>
 <th class="s" data-k="axis3a">③先验</th><th class="s" data-k="axis3b">③秩序来源</th>
 <th class="s" data-k="axis4a">④互动</th><th class="s" data-k="axis4b">④可改变</th>
 <th class="s" data-k="axis4c">④干预</th></tr></thead>
@@ -528,17 +535,17 @@ def main():
 
 <h2>怎么读这张表</h2>
 <ol>
-<li><strong>只看第 5 列（②不动层）</strong>：这一列是全表的枢纽——你选哪一层作为不变的支点，
+<li><strong>只看「②不动层」与「⑤目的」两列</strong>：前一是站在哪里，后一是去哪里，二者正交——你选哪一层作为不变的支点，
 决定了其余各列。按它排序，77 人会自然分成 20 组。</li>
-<li><strong>横向读一行</strong>：得到一个人的完整立场。比如「未分 · 关系 · 道·自然 · 零 · 涌现 ·
-独在 · 我 · 自然」——这是庄子。</li>
+<li><strong>横向读一行</strong>：得到一个人的完整立场。比如「未分 · 关系 · 道·自然 · 合道·逍遥 · 零 ·
+涌现 · 独在 · 我 · 自然」——这是庄子。</li>
 <li><strong>纵向读一列</strong>：得到一个问题上的全部选项。第 4 列告诉我们「第一原理」只有 20 种
 可能答案。</li>
-<li><strong>找表中最像的两行</strong>：往往就是被并称的那两位。老子与庄子八列全同；
+<li><strong>找表中最像的两行</strong>：往往就是被并称的那两位。老子与庄子九列全同；
 孔子与韩非只在「②不动层」与「④可改变」上分道。</li>
 </ol>
 
-<h2>四问取值分布</h2>
+<h2>五问取值分布</h2>
 <div class="tw"><table><thead><tr><th>问题</th><th>取值分布</th></tr></thead><tbody>
 <tr><td>① 界线</td><td>未分 34 ｜ 二分 32 ｜ 统一 11</td></tr>
 <tr><td>① 关系</td><td>关系 51 ｜ 实体 26</td></tr>
@@ -551,6 +558,7 @@ def main():
 <tr><td>④ 互动</td><td>共在 38 ｜ 独在 24 ｜ 伙伴 10 ｜ 对手 5</td></tr>
 <tr><td>④ 可改变</td><td>我 31 ｜ 心 20 ｜ 制度 14 ｜ 无 8 ｜ 条件 2 ｜ 关系 2</td></tr>
 <tr><td>④ 干预</td><td>自然 27 ｜ 心 25 ｜ 理·天 15 ｜ 法 10</td></tr>
+<tr><td>⑤ 目的</td><td>知·理解 14 ｜ 成德·成圣 14 ｜ 治·秩序 11 ｜ 见真·合一 8 ｜ 合道·逍遥 7 ｜ 本真·自由 7 ｜ 解脱·涅槃 6 ｜ 不动心 4 ｜ 幸福·繁荣 3 ｜ 当下·无求 3</td></tr>
 </tbody></table></div>
 """, "coordinates.html"))
 
@@ -583,13 +591,14 @@ def main():
                  '<span class="chip">① 界线 <b>%s</b></span>'
                  '<span class="chip">① 关系 <b>%s</b></span>'
                  '<span class="chip">② 不动层 <b>%s</b></span>'
+                 '<span class="chip">⑤ 目的 <b>%s</b></span>'
                  '<span class="chip">③ 先验 <b>%s</b></span>'
                  '<span class="chip">③ 秩序 <b>%s</b></span>'
                  '<span class="chip">④ 互动 <b>%s</b></span>'
                  '<span class="chip">④ 可改变 <b>%s</b></span>'
                  '<span class="chip">④ 干预 <b>%s</b></span>'
                  '<span class="chip">A %d ／ B %d</span></div>') % (
-            d["axis1a"], d["axis1b"], d["axis2"], d["axis3a"], d["axis3b"],
+            d["axis1a"], d["axis1b"], d["axis2"], d["purpose"], d["axis3a"], d["axis3b"],
             d["axis4a"], d["axis4b"], d["axis4c"], d["A"], d["B"])
         body = ('<p class="crumb"><a href="people.html">人物索引</a> › '
                 '<a href="coordinates.html">%s · %s</a></p>%s%s%s') % (
